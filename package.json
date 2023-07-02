@@ -10,7 +10,7 @@
     "Lint:fix": "eslint . --fix"
   },
   "keywords": [],
-  "author": "",
+  "author": "Anastasia Bobrenko",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
