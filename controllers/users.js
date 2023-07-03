@@ -37,12 +37,21 @@ const createUser = (req, res, next) => {
     .catch(next)
 }
 
-const editUserInfo = (req, res, next) => {
-  const { name, email } = req.body
-  userModel.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true })
+const updateUser = (req, res, next, body) => {
+  const updateObject = Object.keys(body)
+    .reduce((obj, key) => (
+      { ...obj, [key]: body[key] }
+    ), {})
+
+  userModel.findByIdAndUpdate(req.user._id, updateObject, { new: true, runValidators: true })
     .orFail(() => next(new NotFoundError('Пользователь c таким id не найден')))
     .then((user) => res.status(OK).send(user))
     .catch(next)
+}
+
+const editUserInfo = (req, res, next) => {
+  const { name, email } = req.body
+  updateUser(req, res, next, { name, email })
 }
 
 const getUserInfo = (req, res, next) => {
