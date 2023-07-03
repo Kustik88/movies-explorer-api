@@ -62,7 +62,7 @@ const movieSchema = mongoose.Schema({
   },
   nameEN: {
     type: String,
-    required: [true, mustBeFilled('nameEn')],
+    required: [true, mustBeFilled('nameEnre')],
   },
 })
 
