@@ -1,30 +1,31 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
+const mustBeFilled = require('../helpers/mustBeFilled')
 
 const movieSchema = mongoose.Schema({
   country: {
     type: String,
-    required: [true, 'Поле "country" должно быть заполнено'],
+    required: [true, mustBeFilled('country')],
   },
   director: {
     type: String,
-    required: [true, 'Поле "director" должно быть заполнено'],
+    required: [true, mustBeFilled('director')],
   },
   duration: {
     type: Number,
-    required: [true, 'Поле "duration" должно быть заполнено'],
+    required: [true, mustBeFilled('duration')],
   },
   year: {
     type: String,
-    required: [true, 'Поле "year" должно быть заполнено'],
+    required: [true, mustBeFilled('year')],
   },
   description: {
     type: String,
-    required: [true, 'Поле "description" должно быть заполнено'],
+    required: [true, mustBeFilled('descrription')],
   },
   image: {
     type: String,
-    required: [true, 'Поле "image" должно быть заполнено'],
+    required: [true, mustBeFilled('image')],
     validate: {
       validator: (v) => validator.isURL(v),
       message: 'Некорректный URL ссылки изображение',
@@ -32,7 +33,7 @@ const movieSchema = mongoose.Schema({
   },
   trailerLink: {
     type: String,
-    required: [true, 'Поле "trailerLink" должно быть заполнено'],
+    required: [true, mustBeFilled('trailerLink')],
     validate: {
       validator: (v) => validator.isURL(v),
       message: 'Некорректный URL ссылки на трейлер',
@@ -40,7 +41,7 @@ const movieSchema = mongoose.Schema({
   },
   thumbnail: {
     type: String,
-    required: [true, 'Поле "thumnail" должно быть заполнено'],
+    required: [true, mustBeFilled('thumbnail')],
     validate: {
       validator: (v) => validator.isURL(v),
       message: 'Некорректный URL ссылки на изображение',
@@ -48,20 +49,20 @@ const movieSchema = mongoose.Schema({
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    required: [true, 'Поле "owner" должно быть заполнено'],
+    required: [true, mustBeFilled('owner')],
     ref: 'user',
   },
   movieId: {
     type: Number,
-    required: [true, 'Поле "movieId" должно быть заполнено'],
+    required: [true, mustBeFilled('movieId')],
   },
   nameRU: {
     type: String,
-    required: [true, 'Поле "nameRU" должно быть заполнено'],
+    required: [true, mustBeFilled('nameRu')],
   },
   nameEN: {
     type: String,
-    required: [true, 'Поле "nameEN" должно быть заполнено'],
+    required: [true, mustBeFilled('nameEn')],
   },
 })
 
