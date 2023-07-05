@@ -36,12 +36,10 @@ const validateUserBodyForPatchUserInfo = celebrate({
     name: Joi
       .string()
       .min(2)
-      .max(30)
-      .required(),
+      .max(30),
     email: Joi
       .string()
-      .email()
-      .required(),
+      .email(),
   }),
 })
 
@@ -51,12 +49,13 @@ const validateMovieBodyForPost = celebrate({
     director: Joi.string().required(),
     duration: Joi.number().required(),
     year: Joi.string().required(),
-    decrition: Joi.string().required(),
+    description: Joi.string().required(),
     image: Joi.string().required().regex(regexForLink),
     trailerLink: Joi.string().required().regex(regexForLink),
     thumbnail: Joi.string().required().regex(regexForLink),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
+    movieId: Joi.number().required(),
   }),
 })
 

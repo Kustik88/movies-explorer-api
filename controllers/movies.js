@@ -27,6 +27,7 @@ const createMovie = (req, res, next) => {
     nameRU,
     nameEN,
     thumbnail,
+    movieId,
   } = req.body
   movieModel.create({
     country,
@@ -40,6 +41,7 @@ const createMovie = (req, res, next) => {
     nameEN,
     thumbnail,
     owner,
+    movieId,
   }).then((newMovie) => res.status(CREATED).send(newMovie))
     .catch(next)
 }

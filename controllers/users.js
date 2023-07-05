@@ -37,6 +37,11 @@ const createUser = (req, res, next) => {
     .catch(next)
 }
 
+const returnEmailAndNameUser = (user) => {
+  const { name, email } = user
+  return { name, email }
+}
+
 const updateUser = (req, res, next, body) => {
   const updateObject = Object.keys(body)
     .reduce((obj, key) => (
@@ -45,7 +50,7 @@ const updateUser = (req, res, next, body) => {
 
   userModel.findByIdAndUpdate(req.user._id, updateObject, { new: true, runValidators: true })
     .orFail(() => next(new NotFoundError('Пользователь c таким id не найден')))
-    .then((user) => res.status(OK).send(user))
+    .then((user) => res.status(OK).send(returnEmailAndNameUser(user)))
     .catch(next)
 }
 
@@ -58,7 +63,7 @@ const getUserInfo = (req, res, next) => {
   const userId = req.user._id
   userModel.findById(userId)
     .orFail(() => next(new NotFoundError('Пользователь c таким id не найден')))
-    .then((user) => res.status(OK).send(user))
+    .then((user) => res.status(OK).send(returnEmailAndNameUser(user)))
     .catch(next)
 }
 
