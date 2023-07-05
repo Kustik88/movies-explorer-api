@@ -1,31 +1,31 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
-const mustBeFilled = require('../helpers/mustBeFilled')
+// const mustBeFilled = require('../helpers/mustBeFilled')
 
 const movieSchema = mongoose.Schema({
   country: {
     type: String,
-    required: [true, mustBeFilled('country')],
+    required: [true, 'country'],
   },
   director: {
     type: String,
-    required: [true, mustBeFilled('director')],
+    required: [true, 'director'],
   },
   duration: {
     type: Number,
-    required: [true, mustBeFilled('duration')],
+    required: [true, 'duration'],
   },
   year: {
     type: String,
-    required: [true, mustBeFilled('year')],
+    required: [true, 'year'],
   },
   description: {
     type: String,
-    required: [true, mustBeFilled('descrription')],
+    required: [true, 'descrription'],
   },
   image: {
     type: String,
-    required: [true, mustBeFilled('image')],
+    required: [true, 'image'],
     validate: {
       validator: (v) => validator.isURL(v),
       message: 'Некорректный URL ссылки изображение',
@@ -33,7 +33,7 @@ const movieSchema = mongoose.Schema({
   },
   trailerLink: {
     type: String,
-    required: [true, mustBeFilled('trailerLink')],
+    required: [true, 'trailerLink'],
     validate: {
       validator: (v) => validator.isURL(v),
       message: 'Некорректный URL ссылки на трейлер',
@@ -41,7 +41,7 @@ const movieSchema = mongoose.Schema({
   },
   thumbnail: {
     type: String,
-    required: [true, mustBeFilled('thumbnail')],
+    required: [true, 'thumbnail'],
     validate: {
       validator: (v) => validator.isURL(v),
       message: 'Некорректный URL ссылки на изображение',
@@ -49,21 +49,21 @@ const movieSchema = mongoose.Schema({
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    required: [true, mustBeFilled('owner')],
+    required: [true, 'owner'],
     ref: 'user',
   },
   movieId: {
     type: Number,
-    required: [true, mustBeFilled('movieId')],
+    required: [true, 'movieId'],
   },
   nameRU: {
     type: String,
-    required: [true, mustBeFilled('nameRu')],
+    required: [true, 'nameRu'],
   },
   nameEN: {
     type: String,
-    required: [true, mustBeFilled('nameEnre')],
+    required: [true, 'nameEn'],
   },
 })
 
-module.exports = mongoose.Schema('movie', movieSchema)
+module.exports = mongoose.model('movie', movieSchema)

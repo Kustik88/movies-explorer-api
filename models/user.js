@@ -1,19 +1,19 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
-const mustBeFilled = require('../helpers/mustBeFilled')
+// const mustBeFilled = require('../helpers/mustBeFilled')
 const UnauthorizedError = require('../errors/UnauthorizedError')
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, mustBeFilled('name')],
+    required: [true, 'name'],
     minlength: 2,
     maxlength: 30,
   },
   email: {
     type: String,
-    required: [true, mustBeFilled('email')],
+    required: [true, 'email'],
     unique: true,
     validate: {
       validator: (v) => validator.isEmail(v),
@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, mustBeFilled('password')],
+    required: [true, 'password'],
   },
 }, { versionKey: false })
 

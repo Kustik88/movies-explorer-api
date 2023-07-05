@@ -23,11 +23,10 @@ const createMovie = (req, res, next) => {
     year,
     description,
     image,
-    trailer,
+    trailerLink,
     nameRU,
     nameEN,
     thumbnail,
-    movieId,
   } = req.body
   movieModel.create({
     country,
@@ -36,21 +35,20 @@ const createMovie = (req, res, next) => {
     year,
     description,
     image,
-    trailer,
+    trailerLink,
     nameRU,
     nameEN,
     thumbnail,
-    movieId,
     owner,
   }).then((newMovie) => res.status(CREATED).send(newMovie))
     .catch(next)
 }
 
 const deleteMovie = (req, res, next) => {
-  movieModel.findOne({ movieId: req.params.id })
+  movieModel.findOne({ _id: req.params.id })
     .then((movie) => {
       if (!movie) {
-        return next(new NotFoundError('Фильм с таким movieId не найден'))
+        return next(new NotFoundError('Фильм с таким id не найден'))
       }
       if (movie.owner.toString() !== req.user._id) {
         return next(new ForbiddenError('Нельзя удалить фильм, если вы его не добавляли'))
