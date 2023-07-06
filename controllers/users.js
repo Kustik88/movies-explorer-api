@@ -76,9 +76,22 @@ const loginUser = (req, res, next) => {
         JWT_SECRET,
         { expiresIn: '3d' },
       )
-      res.send(token)
+      res
+        .cookie('jwt', token, {
+          maxAge: 3600000 * 24 * 3,
+          httpOnly: true,
+        })
+        .send(token)
     })
     .catch(next)
+}
+const signoutUser = (req, res, next) => {
+  try {
+    res.clearCookie('jwt')
+      .send({ message: 'Пользователь успешно вышел' })
+  } catch (err) {
+    next(err)
+  }
 }
 
 module.exports = {
@@ -86,4 +99,5 @@ module.exports = {
   createUser,
   editUserInfo,
   loginUser,
+  signoutUser,
 }

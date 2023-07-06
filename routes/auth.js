@@ -4,5 +4,6 @@ const { validateUserBodyForSignUp, validateUserBodyForSignIn } = require('../mid
 
 router.post('/signin', validateUserBodyForSignIn, userController.loginUser)
 router.post('/signup', validateUserBodyForSignUp, userController.createUser)
+router.post('/signout', userController.signoutUser)
 
 module.exports = router
