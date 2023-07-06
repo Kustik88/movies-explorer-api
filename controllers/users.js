@@ -9,6 +9,7 @@ const {
 const ExistingEmailError = require('../errors/ExistingEmailError')
 const BadRequestError = require('../errors/BadRequestError')
 const NotFoundError = require('../errors/NotFoundError')
+const UnauthorizedError = require('../errors/UnauthorizedError')
 
 const createUser = (req, res, next) => {
   const { name, email, password } = req.body
@@ -86,6 +87,9 @@ const loginUser = (req, res, next) => {
     .catch(next)
 }
 const signoutUser = (req, res, next) => {
+  if (!req.cookies.jwt) {
+    return next(new UnauthorizedError('Необходима авторизация'))
+  }
   try {
     res.clearCookie('jwt')
       .send({ message: 'Пользователь успешно вышел' })
