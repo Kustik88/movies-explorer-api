@@ -1,31 +1,31 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
-// const mustBeFilled = require('../helpers/mustBeFilled')
+const { mustBeFilled } = require('../helpers/mustBeFilled')
 
 const movieSchema = mongoose.Schema({
   country: {
     type: String,
-    required: [true, 'country'],
+    required: [true, mustBeFilled('country')],
   },
   director: {
     type: String,
-    required: [true, 'director'],
+    required: [true, mustBeFilled('director')],
   },
   duration: {
     type: Number,
-    required: [true, 'duration'],
+    required: [true, mustBeFilled('duration')],
   },
   year: {
     type: String,
-    required: [true, 'year'],
+    required: [true, mustBeFilled('year')],
   },
   description: {
     type: String,
-    required: [true, 'descrription'],
+    required: [true, mustBeFilled('descrription')],
   },
   image: {
     type: String,
-    required: [true, 'image'],
+    required: [true, mustBeFilled('image')],
     validate: {
       validator: (v) => validator.isURL(v),
       message: 'Некорректный URL ссылки изображение',
@@ -33,7 +33,7 @@ const movieSchema = mongoose.Schema({
   },
   trailerLink: {
     type: String,
-    required: [true, 'trailerLink'],
+    required: [true, mustBeFilled('trailerLink')],
     validate: {
       validator: (v) => validator.isURL(v),
       message: 'Некорректный URL ссылки на трейлер',
@@ -41,7 +41,7 @@ const movieSchema = mongoose.Schema({
   },
   thumbnail: {
     type: String,
-    required: [true, 'thumbnail'],
+    required: [true, mustBeFilled('thumbnail')],
     validate: {
       validator: (v) => validator.isURL(v),
       message: 'Некорректный URL ссылки на изображение',
@@ -49,20 +49,20 @@ const movieSchema = mongoose.Schema({
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    required: [true, 'owner'],
+    required: [true, mustBeFilled('owner')],
     ref: 'user',
   },
   movieId: {
     type: Number,
-    required: [true, 'movieId'],
+    required: [true, mustBeFilled('movieId')],
   },
   nameRU: {
     type: String,
-    required: [true, 'nameRu'],
+    required: [true, mustBeFilled('nameRu')],
   },
   nameEN: {
     type: String,
-    required: [true, 'nameEn'],
+    required: [true, mustBeFilled('nameEn')],
   },
 }, { versionKey: false })
 
