@@ -13,3 +13,5 @@
 Сервер Node.js написан с помощью Express, используется база данных MongoDB.
 
 Ссылка на репозиторий https://github.com/Kustik88/movies-explorer-api
+
+Домен https://kust.nomoreparties.sbs
