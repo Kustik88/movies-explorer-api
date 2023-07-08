@@ -30,7 +30,7 @@ const createUser = (req, res, next) => {
         }))
         .catch((err) => {
           if (err.code === 11000) {
-            return next(new ExistingEmailError('Такой пользователь уже существует'))
+            return next(new ExistingEmailError('Пользователь с таким email уже существует'))
           }
           next(err)
         })
@@ -49,9 +49,22 @@ const updateUser = (req, res, next, body) => {
       { ...obj, [key]: body[key] }
     ), {})
 
-  userModel.findByIdAndUpdate(req.user._id, updateObject, { new: true, runValidators: true })
-    .orFail(() => next(new NotFoundError('Пользователь c таким id не найден')))
-    .then((user) => res.status(OK).send(returnEmailAndNameUser(user)))
+  userModel.findOne({ email: updateObject.email })
+    .then((existingUser) => {
+      if (existingUser) {
+        return existingUser.id !== req.user._id
+          ? next(new ExistingEmailError('Пользователь с таким email уже существует'))
+          : next(new BadRequestError('Новый email совпадает со старым'))
+      }
+      return userModel.findByIdAndUpdate(
+        req.user._id,
+        updateObject,
+        { new: true, runValidators: true },
+      )
+        .orFail(() => next(new NotFoundError('Пользователь c таким id не найден')))
+        .then((user) => res.status(OK).send(returnEmailAndNameUser(user)))
+        .catch(next)
+    })
     .catch(next)
 }
 
