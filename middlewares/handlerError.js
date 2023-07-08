@@ -1,17 +1,18 @@
 const { default: mongoose } = require('mongoose')
+const { BAD_REQUEST, INTERNAL_SERVER_ERROR } = require('../constants/statusCodes')
 
 const handlerError = (err, req, res, next) => {
   const {
     statusCode = (err instanceof mongoose.Error)
-      ? 400
-      : 500,
+      ? BAD_REQUEST
+      : INTERNAL_SERVER_ERROR,
     message,
   } = err
 
   res
     .status(statusCode)
     .send({
-      message: statusCode === 500
+      message: statusCode === INTERNAL_SERVER_ERROR
         ? 'Ошибка сервера'
         : message,
     })
