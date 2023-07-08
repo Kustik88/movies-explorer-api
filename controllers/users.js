@@ -38,8 +38,8 @@ const createUser = (req, res, next) => {
     .catch(next)
 }
 
-const returnEmailAndNameUser = (user) => {
-  const { name, email } = user
+const returnEmailAndNameUser = (userData) => {
+  const { name, email } = userData
   return { name, email }
 }
 
