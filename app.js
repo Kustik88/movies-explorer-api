@@ -18,7 +18,7 @@ app.use(express.json())
 app.use(helmet())
 app.use(requestLogger)
 app.use(cookieParser())
-app.use('/api', router)
+app.use(router)
 app.use((req, res, next) => {
   next(new NotFoundError('Запрашиваемая страница не найдена'))
 })
