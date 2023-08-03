@@ -16,8 +16,11 @@ mongoose.connect(DB_ADDRESS)
 
 const app = express()
 
-app.get('/products/:id', cors(corsOptions), (req, res) => {
-  res.json({ msg: 'This is CORS-enabled for a whitelisted domain.' })
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  next()
 })
 app.use(rateLimiter)
 app.use(express.json())
@@ -31,6 +34,9 @@ app.use((req, res, next) => {
 app.use(errorLogger)
 app.use(errors())
 app.use(handlerError)
+app.get('/products/:id', cors(corsOptions), (req, res) => {
+  res.json({ msg: 'This is CORS-enabled for a whitelisted domain.' })
+})
 
 app.listen(PORT, () => {
   console.log(`Sever is running on port ${PORT}`)
