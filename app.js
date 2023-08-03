@@ -11,15 +11,15 @@ const NotFoundError = require('./errors/NotFoundError')
 const { PORT, DB_ADDRESS } = require('./config')
 const { requestLogger, errorLogger } = require('./middlewares/logger')
 
-// const allowedCors = [
-//   'http://localhost:3000',
-//   'http://kust-project.nomoreparties.sbs',
-// ]
+const allowedCors = [
+  'http://localhost:3000',
+  'http://kust-project.nomoreparties.sbs',
+]
 
 mongoose.connect(DB_ADDRESS)
 
 const app = express()
-app.use(cors({ origin: 'http://localhost:3000/' }))
+app.use(cors({ origin: allowedCors }))
 
 app.use(rateLimiter)
 app.use(express.json())
