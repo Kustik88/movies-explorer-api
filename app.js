@@ -11,20 +11,31 @@ const NotFoundError = require('./errors/NotFoundError')
 const { PORT, DB_ADDRESS } = require('./config')
 const { requestLogger, errorLogger } = require('./middlewares/logger')
 
-// const allowedCors = [
-//   'localhost:3000',
-//   'http://kust-project.nomoreparties.sbs',
-// ]
+const allowedCors = [
+  'http://localhost:3000',
+  'http://kust-project.nomoreparties.sbs',
+]
 
 mongoose.connect(DB_ADDRESS)
 
 const app = express()
 app.use(cors())
-
-// eslint-disable-next-line no-unused-vars
-app.get('/products/:id', (req, res, next) => {
-  res.json({ msg: 'This is CORS-enabled for all origins!' })
+app.use((req, res, next) => {
+  const { origin } = req.headers
+  if (allowedCors.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin)
+    const { method } = req
+    const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE'
+    const requestHEaders = req.headers['access-control-request-headers']
+    if (method === 'OPTIONS') {
+      res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS)
+      res.header('Access-Control-Allow-Headers', requestHEaders)
+      res.end()
+    }
+  }
+  next()
 })
+
 app.use(rateLimiter)
 app.use(express.json())
 app.use(helmet())
