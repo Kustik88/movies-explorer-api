@@ -21,6 +21,9 @@ app.use(helmet())
 app.use(requestLogger)
 app.use(cookieParser())
 app.use(cors())
+app.get('/products/:id', (req, res, next) => {
+  res.json({ msg: 'This is CORS-enabled for all origins!' })
+})
 app.use(router)
 app.use((req, res, next) => {
   next(new NotFoundError('Запрашиваемая страница не найдена'))
