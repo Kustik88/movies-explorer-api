@@ -19,9 +19,12 @@ const { requestLogger, errorLogger } = require('./middlewares/logger')
 mongoose.connect(DB_ADDRESS)
 
 const app = express()
-app.use(cors({
-  origin: ['http://localhost:3000', 'http://kust-project.nomoreparties.sbs'],
-}))
+app.use(cors())
+
+// eslint-disable-next-line no-unused-vars
+app.get('/products/:id', (req, res, next) => {
+  res.json({ msg: 'This is CORS-enabled for all origins!' })
+})
 app.use(rateLimiter)
 app.use(express.json())
 app.use(helmet())
