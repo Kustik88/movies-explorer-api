@@ -1,8 +1,10 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const helmet = require('helmet')
 const { errors } = require('celebrate')
 const cookieParser = require('cookie-parser')
+const corsOptions = require('./middlewares/cors')
 const rateLimiter = require('./middlewares/rateLimiter')
 const handlerError = require('./middlewares/handlerError')
 const router = require('./routes')
@@ -13,6 +15,10 @@ const { requestLogger, errorLogger } = require('./middlewares/logger')
 mongoose.connect(DB_ADDRESS)
 
 const app = express()
+
+app.get('/products/:id', cors(corsOptions), (req, res) => {
+  res.json({ msg: 'This is CORS-enabled for a whitelisted domain.' })
+})
 app.use(rateLimiter)
 app.use(express.json())
 app.use(helmet())
