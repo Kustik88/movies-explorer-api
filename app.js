@@ -19,7 +19,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger')
 mongoose.connect(DB_ADDRESS)
 
 const app = express()
-app.use(cors({ origin: 'http://localhost:3000' }))
+app.use(cors({ origin: 'http://localhost:3000/' }))
 
 app.use(rateLimiter)
 app.use(express.json())
