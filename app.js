@@ -11,10 +11,10 @@ const NotFoundError = require('./errors/NotFoundError')
 const { PORT, DB_ADDRESS } = require('./config')
 const { requestLogger, errorLogger } = require('./middlewares/logger')
 
-const allowedCors = [
-  'http://localhost:3000',
-  'http://kust-project.nomoreparties.sbs',
-]
+// const allowedCors = [
+//   'http://localhost:3000',
+//   'http://kust-project.nomoreparties.sbs',
+// ]
 
 mongoose.connect(DB_ADDRESS)
 
