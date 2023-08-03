@@ -11,16 +11,23 @@ const NotFoundError = require('./errors/NotFoundError')
 const { PORT, DB_ADDRESS } = require('./config')
 const { requestLogger, errorLogger } = require('./middlewares/logger')
 
-const allowedCors = [
-  'http://localhost:3000',
-  'http://kust-project.nomoreparties.sbs',
-]
-
 mongoose.connect(DB_ADDRESS)
 
 const app = express()
-app.use(cors({ origin: allowedCors }))
+const whitelist = ['http://localhost:3000', 'http://kust-project.nomoreparties.sbs']
+const corsOptionsDelegate = (req, callback) => {
+  let corsOptions
+  if (whitelist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false } // disable CORS for this request
+  }
+  callback(null, corsOptions) // callback expects two parameters: error and options
+}
 
+app.get('/products/:id', cors(corsOptionsDelegate), (req, res) => {
+  res.json({ msg: 'This is CORS-enabled for a whitelisted domain.' })
+})
 app.use(rateLimiter)
 app.use(express.json())
 app.use(helmet())
