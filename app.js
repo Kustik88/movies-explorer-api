@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-// const cors = require('cors')
+const cors = require('cors')
 const helmet = require('helmet')
 const { errors } = require('celebrate')
 const cookieParser = require('cookie-parser')
@@ -11,23 +11,17 @@ const NotFoundError = require('./errors/NotFoundError')
 const { PORT, DB_ADDRESS } = require('./config')
 const { requestLogger, errorLogger } = require('./middlewares/logger')
 
-const allowedCors = [
-  'localhost:3000',
-  'http://kust-project.nomoreparties.sbs',
-]
+// const allowedCors = [
+//   'localhost:3000',
+//   'http://kust-project.nomoreparties.sbs',
+// ]
 
 mongoose.connect(DB_ADDRESS)
 
 const app = express()
-app.use((req, res, next) => {
-  const { origin } = req.headers
-
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin)
-  }
-
-  next()
-})
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://kust-project.nomoreparties.sbs'],
+}))
 app.use(rateLimiter)
 app.use(express.json())
 app.use(helmet())
