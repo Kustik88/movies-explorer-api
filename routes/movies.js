@@ -7,6 +7,6 @@ router.use(auth)
 
 router.get('/', moviesController.getCurrentUserMovies)
 router.post('/', validateMovieBodyForPost, moviesController.createMovie)
-router.delete('/:id', validateMovieParams, moviesController.deleteMovie)
+router.delete('/:_id', validateMovieParams, moviesController.deleteMovie)
 
 module.exports = router

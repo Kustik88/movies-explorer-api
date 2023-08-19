@@ -51,10 +51,8 @@ const updateUser = (req, res, next, body) => {
 
   userModel.findOne({ email: updateObject.email })
     .then((existingUser) => {
-      if (existingUser) {
-        return existingUser.id !== req.user._id
-          ? next(new ExistingEmailError('Пользователь с таким email уже существует'))
-          : next(new BadRequestError('Новый email совпадает со старым'))
+      if (existingUser && existingUser.id !== req.user._id) {
+        return next(new ExistingEmailError('Пользователь с таким email уже существует'))
       }
       return userModel.findByIdAndUpdate(
         req.user._id,
@@ -70,6 +68,7 @@ const updateUser = (req, res, next, body) => {
 
 const editUserInfo = (req, res, next) => {
   const { name, email } = req.body
+
   updateUser(req, res, next, { name, email })
 }
 

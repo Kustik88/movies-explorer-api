@@ -61,7 +61,7 @@ const validateMovieBodyForPost = celebrate({
 
 const validateMovieParams = celebrate({
   params: Joi.object().keys({
-    id: Joi.string().required().custom((value, helpers) => {
+    _id: Joi.string().required().custom((value, helpers) => {
       if (!mongoose.Types.ObjectId.isValid(value)) {
         return helpers.message('Invalid movie ID')
       }
