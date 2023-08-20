@@ -13,7 +13,7 @@ const handlerError = (err, req, res, next) => {
     .status(statusCode)
     .send({
       message: statusCode === INTERNAL_SERVER_ERROR
-        ? 'Ошибка сервера'
+        ? '500 Ошибка сервера'
         : message,
     })
   next()
