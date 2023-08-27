@@ -15,7 +15,7 @@ mongoose.connect(DB_ADDRESS)
 
 const app = express()
 const corsOptions = {
-  origin: 'https://kust-project.nomoreparties.sbs',
+  origin: 'http://kust-project.nomoreparties.sbs',
   credentials: true,
 }
 
