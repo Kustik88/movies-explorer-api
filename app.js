@@ -14,7 +14,11 @@ const { requestLogger, errorLogger } = require('./middlewares/logger')
 mongoose.connect(DB_ADDRESS)
 
 const app = express()
-app.use(cors())
+const corsOptions = {
+  origin: 'https://kust-project.nomoreparties.sbs',
+}
+
+app.use(cors(corsOptions))
 app.use(rateLimiter)
 app.use(express.json())
 app.use(helmet())
