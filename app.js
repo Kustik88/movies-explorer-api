@@ -1,6 +1,6 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const cors = require('cors')
+const mongoose = require('mongoose')
 const helmet = require('helmet')
 const { errors } = require('celebrate')
 const cookieParser = require('cookie-parser')
@@ -16,6 +16,7 @@ mongoose.connect(DB_ADDRESS)
 const app = express()
 const corsOptions = {
   origin: 'https://kust-project.nomoreparties.sbs',
+  credentials: true,
 }
 
 app.use(cors(corsOptions))
